@@ -13,17 +13,15 @@ import transactionRoutes from './api/routes/transactionRoutes';
 import goalRoutes from './api/routes/goalRoutes';
 import userRoutes from './api/routes/userRoutes';
 import aiRoutes from './api/routes/aiRoutes';
+import notificationRoutes from './api/routes/notificationRoutes'; // <-- 1. IMPORT the new routes
 
 dotenv.config();
 connectDB();
 
 const app = express();
 
-// --- THIS IS THE FIX ---
-// Trust the first proxy in front of the app (Render's proxy)
 app.set('trust proxy', 1);
 
-// --- Simplified and More Direct CORS Configuration ---
 const allowedOrigins = [
     'http://localhost:5173',
     'https://fin-genius-topaz.vercel.app'
@@ -32,13 +30,10 @@ const allowedOrigins = [
 const corsOptions = {
     origin: allowedOrigins,
     credentials: true,
-    optionsSuccessStatus: 200 // For legacy browser support
+    optionsSuccessStatus: 200
 };
-
-// Use the cors middleware with our options
 app.use(cors(corsOptions));
 
-// --- Other Middleware ---
 app.use(helmet());
 app.use(express.json());
 
@@ -56,6 +51,7 @@ app.use('/api/v1/transactions', transactionRoutes);
 app.use('/api/v1/goals', goalRoutes);
 app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/ai', aiRoutes);
+app.use('/api/v1/notifications', notificationRoutes); // <-- 2. USE the new routes
 
 // --- Final Middleware ---
 app.use(notFound);
