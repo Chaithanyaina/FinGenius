@@ -3,7 +3,6 @@ import { getFinancialInsights } from '../controllers/aiController';
 import { protect } from '../middlewares/authMiddleware';
 
 const router = express.Router();
-
-router.get('/insights', protect, getFinancialInsights);
+router.post('/insights', protect, getFinancialInsights);
 
 export default router;

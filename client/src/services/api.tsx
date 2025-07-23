@@ -52,10 +52,7 @@ export const getTransactions = async () => {
 };
 
 // --- AI Service ---
-export const getAiInsights = async () => {
-    const { data } = await apiClient.get('/ai/insights');
-    return data;
-};
+
 // client/src/services/api.ts
 // ... (keep all existing functions)
 
@@ -79,5 +76,9 @@ export const updateTransaction = async (id: string, transactionData: object) => 
 };
 export const getNotifications = async () => {
     const { data } = await apiClient.get('/notifications');
+    return data;
+};
+export const getAiInsights = async (question: string) => {
+    const { data } = await apiClient.post('/ai/insights', { question });
     return data;
 };
