@@ -1,15 +1,14 @@
 import { useData } from '../hooks/useData';
 import Header from '../components/layout/Header';
 import { Link } from 'react-router-dom';
-import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie, Cell } from 'recharts';
-import { endOfMonth, startOfMonth, subMonths } from 'date-fns';
+import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
+import { subMonths } from 'date-fns';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
 
 const Profile = () => {
-  const { transactions, stats } = useData();
+  const { transactions } = useData();
 
-  // Data for last 30 days
   const last30Days = subMonths(new Date(), 1);
   const monthlyTransactions = transactions.filter(t => new Date(t.date) > last30Days);
 
@@ -50,13 +49,13 @@ const Profile = () => {
                 </div>
                 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    {/* Income Breakdown */}
                     <div className="glass-card p-4 h-[400px]">
                         <h3 className="text-lg font-semibold mb-4 text-center">Income by Category</h3>
                         <ResponsiveContainer width="100%" height="90%">
                            <PieChart>
                                 <Pie data={incomeChartData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100} fill="#8884d8">
-                                    {incomeChartData.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)}
+                                    {/* FIX: Changed 'entry' to '_entry' to mark it as unused */}
+                                    {incomeChartData.map((_entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)}
                                 </Pie>
                                 <Tooltip formatter={(value: number) => formatCurrency(value)} />
                                 <Legend />
@@ -64,13 +63,13 @@ const Profile = () => {
                         </ResponsiveContainer>
                     </div>
 
-                    {/* Expense Breakdown */}
                     <div className="glass-card p-4 h-[400px]">
                         <h3 className="text-lg font-semibold mb-4 text-center">Expense by Category</h3>
                          <ResponsiveContainer width="100%" height="90%">
                            <PieChart>
                                 <Pie data={expenseChartData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100} fill="#82ca9d">
-                                    {expenseChartData.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)}
+                                    {/* FIX: Changed 'entry' to '_entry' to mark it as unused */}
+                                    {expenseChartData.map((_entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)}
                                 </Pie>
                                 <Tooltip formatter={(value: number) => formatCurrency(value)} />
                                 <Legend />
