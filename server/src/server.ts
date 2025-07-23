@@ -17,20 +17,8 @@ connectDB();
 
 const app = express();
 
-// --- Simplified and More Direct CORS Configuration ---
-const allowedOrigins = [
-    'http://localhost:5173',
-    'https://fin-genius-topaz.vercel.app'
-];
-
-const corsOptions = {
-    origin: allowedOrigins,
-    credentials: true,
-    optionsSuccessStatus: 200 // For legacy browser support
-};
-
-// Use the cors middleware with our options
-app.use(cors(corsOptions));
+// --- THE TEST: Temporarily allow ALL origins ---
+app.use(cors());
 
 // --- Other Middleware ---
 app.use(helmet());
