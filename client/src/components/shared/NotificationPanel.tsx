@@ -15,7 +15,7 @@ interface NotificationPanelProps {
   onClose: () => void;
 }
 
-const NotificationPanel = ({ isOpen, onClose }: NotificationPanelProps) => {
+const NotificationPanel = ({ isOpen }: NotificationPanelProps) => {
     const [notifications, setNotifications] = useState<Notification[]>([]);
     const [loading, setLoading] = useState(false);
 
