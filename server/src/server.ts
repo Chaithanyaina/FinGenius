@@ -5,6 +5,7 @@ import connectDB from './config/db';
 import { notFound, errorHandler } from './api/middlewares/errorHandler';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import notificationRoutes from './api/routes/notificationRoutes'; // <-- ADD
 
 import authRoutes from './api/routes/authRoutes';
 import transactionRoutes from './api/routes/transactionRoutes';
@@ -38,6 +39,7 @@ app.use('/api/v1/transactions', transactionRoutes);
 app.use('/api/v1/goals', goalRoutes);
 app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/ai', aiRoutes);
+app.use('/api/v1/notifications', notificationRoutes); // <-- ADD
 
 // --- Final Middleware ---
 app.use(notFound);

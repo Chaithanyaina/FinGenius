@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Calendar as CalendarIcon } from 'lucide-react';
 import { addTransaction } from '../../services/api';
 import { DayPicker } from 'react-day-picker';
-import 'react-day-picker/dist/style.css'; // Keep this for base styles
+import 'react-day-picker/dist/style.css';
 import { format } from 'date-fns';
 import { useData } from '../../hooks/useData';
 import toast from 'react-hot-toast';
@@ -15,8 +15,7 @@ interface AddTransactionModalProps {
 
 const AddTransactionModal = ({ isOpen, onClose }: AddTransactionModalProps) => {
   const { addTransactionToState } = useData();
-  
-  // Initial state for the form
+
   const getInitialState = () => ({
     type: 'expense' as 'income' | 'expense',
     amount: '',
@@ -29,16 +28,13 @@ const AddTransactionModal = ({ isOpen, onClose }: AddTransactionModalProps) => {
   const [error, setError] = useState('');
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
-  // Function to reset all fields
   const resetForm = () => {
     setFormState(getInitialState());
     setError('');
   };
 
-  // When the modal is closed, reset the form
   useEffect(() => {
     if (!isOpen) {
-      // Add a small delay to let the exit animation finish
       setTimeout(() => {
         resetForm();
       }, 300);
@@ -53,12 +49,12 @@ const AddTransactionModal = ({ isOpen, onClose }: AddTransactionModalProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    
+
     if (!formState.amount || !formState.category || !formState.date) {
       setError('Amount, Category, and Date are required.');
       return;
     }
-    
+
     const promise = addTransaction({
       ...formState,
       amount: parseFloat(formState.amount),
@@ -97,15 +93,15 @@ const AddTransactionModal = ({ isOpen, onClose }: AddTransactionModalProps) => {
               <X />
             </button>
             <h2 className="text-2xl font-bold mb-6">Add New Transaction</h2>
-            
+
             {error && <p className="text-red-400 text-center bg-red-500/10 p-2 rounded-md mb-4">{error}</p>}
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-foreground/80 mb-1">Type</label>
                 <div className="grid grid-cols-2 gap-2">
-                  <button type="button" onClick={() => setFormState(s => ({...s, type: 'expense'}))} className={`py-2 rounded-md transition-all duration-300 ${formState.type === 'expense' ? 'bg-red-500/80 text-white font-semibold ring-2 ring-red-400' : 'bg-white/10'}`}>Expense</button>
-                  <button type="button" onClick={() => setFormState(s => ({...s, type: 'income'}))} className={`py-2 rounded-md transition-all duration-300 ${formState.type === 'income' ? 'bg-green-500/80 text-white font-semibold ring-2 ring-green-400' : 'bg-white/10'}`}>Income</button>
+                  <button type="button" onClick={() => setFormState(s => ({ ...s, type: 'expense' }))} className={`py-2 rounded-md transition-all duration-300 ${formState.type === 'expense' ? 'bg-red-500/80 text-white font-semibold ring-2 ring-red-400' : 'bg-white/10'}`}>Expense</button>
+                  <button type="button" onClick={() => setFormState(s => ({ ...s, type: 'income' }))} className={`py-2 rounded-md transition-all duration-300 ${formState.type === 'income' ? 'bg-green-500/80 text-white font-semibold ring-2 ring-green-400' : 'bg-white/10'}`}>Income</button>
                 </div>
               </div>
               <div>
@@ -123,11 +119,16 @@ const AddTransactionModal = ({ isOpen, onClose }: AddTransactionModalProps) => {
                   <CalendarIcon className="h-4 w-4" />
                 </button>
                 {isCalendarOpen && (
-                  <div className="absolute z-10 bottom-full mb-2 right-0"> {/* <-- FIX: Positioned to open upwards */}
+                  <div className="absolute z-10 bottom-full mb-2 right-0">
                     <DayPicker
                       mode="single"
                       selected={formState.date}
-                      onSelect={(d) => { if(d) setFormState(s => ({...s, date: d})); setIsCalendarOpen(false); }}
+                      onSelect={(d) => {
+                        if (d) {
+                          setFormState(s => ({ ...s, date: d }));
+                        }
+                        setIsCalendarOpen(false); // ✅ Closes calendar after date selection
+                      }}
                       className="bg-card border border-white/10 rounded-md p-2"
                       classNames={{
                         head_cell: 'text-foreground/60 w-9 font-normal text-sm',

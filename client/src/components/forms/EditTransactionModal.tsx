@@ -98,7 +98,6 @@ const EditTransactionModal = ({ isOpen, transaction, onClose }: EditTransactionM
             <h2 className="text-2xl font-bold mb-6">Edit Transaction</h2>
 
             <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Type */}
               <div>
                 <label className="block text-sm font-medium text-foreground/80 mb-1">Type</label>
                 <div className="grid grid-cols-2 gap-2">
@@ -123,7 +122,6 @@ const EditTransactionModal = ({ isOpen, transaction, onClose }: EditTransactionM
                 </div>
               </div>
 
-              {/* Amount */}
               <div>
                 <label htmlFor="amount" className="block text-sm font-medium text-foreground/80 mb-1">
                   Amount
@@ -139,7 +137,6 @@ const EditTransactionModal = ({ isOpen, transaction, onClose }: EditTransactionM
                 />
               </div>
 
-              {/* Category */}
               <div>
                 <label htmlFor="category" className="block text-sm font-medium text-foreground/80 mb-1">
                   Category
@@ -155,7 +152,6 @@ const EditTransactionModal = ({ isOpen, transaction, onClose }: EditTransactionM
                 />
               </div>
 
-              {/* Date */}
               <div className="relative">
                 <label htmlFor="date" className="block text-sm font-medium text-foreground/80 mb-1">
                   Date
@@ -175,7 +171,7 @@ const EditTransactionModal = ({ isOpen, transaction, onClose }: EditTransactionM
                       selected={formState.date}
                       onSelect={(d) => {
                         if (d) setFormState(s => ({ ...s, date: d }));
-                        setIsCalendarOpen(false);
+                        setIsCalendarOpen(false); // ✅ Calendar closes on date selection
                       }}
                       className="bg-card border border-white/10 rounded-md p-2"
                       classNames={{
@@ -195,7 +191,6 @@ const EditTransactionModal = ({ isOpen, transaction, onClose }: EditTransactionM
                 )}
               </div>
 
-              {/* Description */}
               <div>
                 <label htmlFor="description" className="block text-sm font-medium text-foreground/80 mb-1">
                   Description (Optional)
@@ -209,7 +204,6 @@ const EditTransactionModal = ({ isOpen, transaction, onClose }: EditTransactionM
                 />
               </div>
 
-              {/* Submit */}
               <button
                 type="submit"
                 disabled={!formState.amount || !formState.category || !formState.date}

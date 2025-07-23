@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
-
 const apiClient = axios.create({
   baseURL: API_URL,
 });
@@ -76,5 +75,9 @@ export const deleteTransaction = async (id: string) => {
 };
 export const updateTransaction = async (id: string, transactionData: object) => {
     const { data } = await apiClient.put(`/transactions/${id}`, transactionData);
+    return data;
+};
+export const getNotifications = async () => {
+    const { data } = await apiClient.get('/notifications');
     return data;
 };
