@@ -1,0 +1,43 @@
+name: FinGenius CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ] # This pipeline runs on every push to the main branch
+
+jobs:
+  test-backend:
+    name: Test Backend API
+    runs-on: ubuntu-latest # Use a standard Linux virtual machine
+    defaults:
+      run:
+        working-directory: ./server # All commands will run in the server folder
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+  deploy-backend:
+    name: Deploy Backend to Render
+    needs: test-backend # This job will only run if test-backend succeeds
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Render deploy hook
+        run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
+
+  deploy-frontend:
+    name: Deploy Frontend to Vercel
+    needs: test-backend # This job also waits for tests to succeed
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Vercel deploy hook
+        run: curl -X POST ${{ secrets.VERCEL_DEPLOY_HOOK }}
