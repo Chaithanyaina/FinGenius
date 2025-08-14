@@ -15,6 +15,7 @@ Take a GIF or high-quality screenshot of your live dashboard and place it here. 
 </div>
 
 🎯 Project Overview
+
 FinGenius is a scalable, full-stack MERN application designed to provide users with a modern and intuitive way to manage their personal finances. It features a real-time dashboard with interactive charts, full CRUD functionality for transactions, and an innovative AI co-pilot powered by the Google Gemini API. The entire project is containerized with Docker and deployed via a professional CI/CD pipeline using GitHub Actions, ensuring robust and automated updates.
 
 ✨ Key Features
